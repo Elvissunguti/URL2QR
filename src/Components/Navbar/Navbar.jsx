@@ -14,11 +14,13 @@ const Navbar = ({ darkMode, toggleMode }) => {
     return (
         <nav className={`bg-${darkMode ? 'gray-800' : 'green-500'} p-4 flex justify-between items-center`}>
             <div className="flex items-center">
+                <a href="https://url2qr-66690wwi2-elvis-s-projects-b336cb2b.vercel.app/">
                 <img 
                     src={logoSrc}
                     alt="URL2QR Logo"
                     className="h-16 w-18  pl-4"
                 />
+                </a>
                 <h1 className={`text-white text-2xl font-bold ${darkMode ? 'text-white' : 'text-black'}`}>URL to QR Code Converter</h1>
             </div>
             <button
