@@ -26,6 +26,7 @@ const MainPage = ({ darkMode }) => {
             }
             const blob = await response.blob();
             const imageUrl = URL.createObjectURL(blob);
+            console.log("Image URL:", imageUrl);
             setQRCodeImage(imageUrl);
         } catch (error) {
             console.error('Error generating QR code:', error);
