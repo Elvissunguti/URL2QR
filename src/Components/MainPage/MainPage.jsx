@@ -85,7 +85,7 @@ const MainPage = ({ darkMode }) => {
                 </button>
             </div>
             <div>
-                {qrCodeImage && (
+                {!qrCodeImage && (
                     <div className={`border border-${darkMode ? 'gray-700' : 'gray-300'} p-4 inline-block mb-4`}>
                         <img 
                             src={qrCodeImage} 
@@ -93,13 +93,13 @@ const MainPage = ({ darkMode }) => {
                             className="block mx-auto mb-2 h-72 w-72" />
                         <button
                             onClick={downloadQRCode}
-                            className={`bg-${darkMode ? 'blue-700' : 'blue-500'} text-white px-4 py-2  rounded-md hover:bg-${darkMode ? 'blue-800' : 'blue-600'} focus:outline-none focus:ring-2 focus:ring-${darkMode ? 'blue-500' : 'blue-200'}`}
+                            className={`bg-green-500 text-white px-4 py-2  rounded-md hover:bg-${darkMode ? 'blue-800' : 'blue-600'} focus:outline-none focus:ring-2 focus:ring-${darkMode ? 'blue-500' : 'blue-200'}`}
                         >
                             Download QR Code
                         </button>
                     </div>
                 )}
-                {!qrCodeImage && <p className={`${darkMode ? "text-white" : ""}`}>Please input a URL above to generate the QR code.</p>}
+                {!qrCodeImage && <p className={`${darkMode ? "text-white" : ""} font-semibold`}>Please input a URL above to generate the QR code.</p>}
             </div>
         </div>
     </section>
