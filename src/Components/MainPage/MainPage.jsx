@@ -85,7 +85,7 @@ const MainPage = ({ darkMode }) => {
                 </button>
             </div>
             <div>
-                {!qrCodeImage && (
+                {qrCodeImage && (
                     <div className={`border border-${darkMode ? 'gray-700' : 'gray-300'} p-4 inline-block mb-4`}>
                         <img 
                             src={qrCodeImage} 
