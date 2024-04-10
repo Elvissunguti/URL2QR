@@ -39,9 +39,8 @@ const MainPage = ({ darkMode }) => {
             })
         };
 
-        const corsProxyUrl = 'https://cors.bridged.cc/';
 
-        fetch(corsProxyUrl + apiUrl, payload)
+        fetch(apiUrl, payload)
             .then(response => response.blob()) // Convert response to Blob
             .then(blob => {
                 // Create URL for the Blob
