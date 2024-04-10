@@ -9,6 +9,8 @@ const MainPage = ({ darkMode }) => {
     };
 
     const generateQRCode = async () => {
+
+        const fileFormat = 'png';
         const apiUrl = '/api/generateQRCode'; // Path to the serverless function
 
         const config = {
@@ -16,7 +18,7 @@ const MainPage = ({ darkMode }) => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ url })
+            body: JSON.stringify({ url, fileFormat })
         };
 
         try {
