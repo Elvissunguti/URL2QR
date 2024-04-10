@@ -19,7 +19,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "babel api -d dist && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -40,5 +40,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.4",
+    "@babel/preset-env": "^7.24.4",
+    "babel-plugin-transform-runtime": "^6.23.0"
   }
 }
