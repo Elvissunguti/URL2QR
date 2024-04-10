@@ -14,7 +14,7 @@ const Navbar = ({ darkMode, toggleMode }) => {
     return (
         <nav className={`bg-${darkMode ? 'gray-800' : 'green-500'} p-4 flex justify-between items-center`}>
             <div className="flex items-center">
-                <a href="https://url2qr-66690wwi2-elvis-s-projects-b336cb2b.vercel.app/">
+                <a href="https://url2qr.vercel.app/">
                 <img 
                     src={logoSrc}
                     alt="URL2QR Logo"
