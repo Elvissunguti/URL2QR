@@ -1,5 +1,3 @@
-const axios = require('axios');
-
 export default async function handler(req, res) {
     const { url, fileFormat } = req.body;
 
@@ -12,13 +10,18 @@ export default async function handler(req, res) {
     };
 
     try {
-        const response = await axios.post(apiUrl, requestData, {
+        const response = await fetch(apiUrl, {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-QRCode-Monkey-Key': apiKey
             },
-            responseType: 'blob' // Specify the response type as blob
+            body: JSON.stringify(requestData)
         });
+
+        if (!response.ok) {
+            throw new Error('Failed to generate QR code');
+        }
 
         // Determine the appropriate content type based on the requested file format
         let contentType;
@@ -32,8 +35,9 @@ export default async function handler(req, res) {
             contentType = 'application/postscript';
         }
 
+        const blob = await response.blob();
         res.setHeader('Content-Type', contentType);
-        res.status(200).send(response.data);
+        res.status(200).send(blob);
     } catch (error) {
         console.error('Error generating QR code:', error);
         res.status(500).json({ error: 'Internal Server Error' });
