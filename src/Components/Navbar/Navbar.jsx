@@ -12,7 +12,7 @@ const Navbar = ({ darkMode, toggleMode }) => {
 
 
     return (
-        <nav className={`bg-${darkMode ? 'gray-800' : 'blue-500'} p-4 flex justify-between items-center`}>
+        <nav className={`bg-${darkMode ? 'gray-800' : 'green-500'} p-4 flex justify-between items-center`}>
             <div className="flex items-center">
                 <img 
                     src={logoSrc}
