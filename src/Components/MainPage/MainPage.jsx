@@ -26,11 +26,11 @@ const MainPage = ({ darkMode }) => {
             if (!response.ok) {
                 throw new Error('Failed to generate QR code');
             }
-            const blob = await response.blob();
-            console.log("Blob received", blob);
-            const imageUrl = URL.createObjectURL(blob);
-            console.log("Image URL:", imageUrl);
+
+            const data = await response.json();
+            const imageUrl = `data:image/png;base64,${data.image}`;
             setQRCodeImage(imageUrl);
+            
         } catch (error) {
             console.error('Error generating QR code:', error);
         }
