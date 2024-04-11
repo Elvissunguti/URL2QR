@@ -23,21 +23,16 @@ export default async function handler(req, res) {
             throw new Error('Failed to generate QR code');
         }
 
-        // Determine the appropriate content type based on the requested file format
-        let contentType;
-        if (fileFormat === 'png') {
-            contentType = 'image/png';
-        } else if (fileFormat === 'svg') {
-            contentType = 'image/svg+xml';
-        } else if (fileFormat === 'pdf') {
-            contentType = 'application/pdf';
-        } else if (fileFormat === 'eps') {
-            contentType = 'application/postscript';
-        }
-
+        // Convert blob to Base64 string
         const blob = await response.blob();
-        res.setHeader('Content-Type', contentType);
-        res.status(200).send(blob);
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = () => {
+            const base64data = reader.result;
+
+            // Send JSON response with Base64 image data
+            res.status(200).json({ image: base64data });
+        };
     } catch (error) {
         console.error('Error generating QR code:', error);
         res.status(500).json({ error: 'Internal Server Error' });
