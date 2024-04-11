@@ -1,4 +1,4 @@
-const fetch = require('node-fetch');
+const fetch = require('node-fetch').default;
 
 export default async function handler(req, res) {
     const { url, fileFormat } = req.body;
