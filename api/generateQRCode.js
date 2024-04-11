@@ -1,4 +1,4 @@
-const fetch = require('node-fetch').default;
+const axios = require('axios');
 
 export default async function handler(req, res) {
     const { url, fileFormat } = req.body;
@@ -12,24 +12,16 @@ export default async function handler(req, res) {
     };
 
     try {
-        const response = await fetch(apiUrl, {
-            method: 'POST',
+        const response = await axios.post(apiUrl, requestData, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-QRCode-Monkey-Key': apiKey
             },
-            body: JSON.stringify(requestData)
+            responseType: 'arraybuffer' // Ensure response is treated as binary data
         });
 
-        if (!response.ok) {
-            throw new Error('Failed to generate QR code');
-        }
-
-        // Convert blob to Base64 string
-        const buffer = await response.buffer();
-
-        // Convert Buffer to Base64 string
-        const base64data = buffer.toString('base64');
+        // Convert response data to Base64 string
+        const base64data = Buffer.from(response.data, 'binary').toString('base64');
 
         // Send JSON response with Base64 image data
         res.status(200).json({ image: base64data });
