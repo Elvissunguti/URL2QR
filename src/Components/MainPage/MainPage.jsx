@@ -1,48 +1,23 @@
 import React, { useState } from "react";
+import QRCode from "qrcode.react";
 
 const MainPage = ({ darkMode }) => {
     const [url, setUrl] = useState("");
-    const [qrCodeImage, setQRCodeImage] = useState(null);
 
     const handleUrlChange = (e) => {
         setUrl(e.target.value);
     };
 
-    const generateQRCode = async () => {
-
-        const fileFormat = 'png';
-        const apiUrl = '/api/generateQRCode'; // Path to the serverless function
-
-        const config = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ url, fileFormat })
-        };
-
-        try {
-            const response = await fetch(apiUrl, config);
-            if (!response.ok) {
-                throw new Error('Failed to generate QR code');
-            }
-
-            const data = await response.json();
-            const imageUrl = `data:image/png;base64,${data.image}`;
-            setQRCodeImage(imageUrl);
-            
-        } catch (error) {
-            console.error('Error generating QR code:', error);
-        }
-    };
-
     const downloadQRCode = () => {
-        if (!qrCodeImage) {
-            alert("No QR code image to download.");
+        if (!url) {
+            alert("Please enter a URL to generate the QR code.");
             return;
         }
+
+        const canvas = document.querySelector("canvas");
+        const qrCodeDataURL = canvas.toDataURL("image/png");
         const a = document.createElement("a");
-        a.href = qrCodeImage;
+        a.href = qrCodeDataURL;
         a.download = "qr-code.png";
         document.body.appendChild(a);
         a.click();
@@ -63,28 +38,25 @@ const MainPage = ({ darkMode }) => {
                         className={`px-4 py-2 border border-${darkMode ? 'gray-700' : 'gray-300'} rounded-l-md focus:outline-none focus:ring-2 focus:ring-${darkMode ? 'blue-500' : 'blue-200'} sm:w-48 lg:w-1/2 ${darkMode ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}
                     />
                     <button
-                        onClick={generateQRCode}
+                        onClick={downloadQRCode}
                         className={`text-white bg-green-500 ml-2 px-4 py-2 rounded-r-md hover:bg-${darkMode ? 'green-800' : 'blue-600'} focus:outline-none focus:ring-2 focus:ring-${darkMode ? 'green-500' : 'blue-200'}`}
                     >
-                        Convert
+                        Download QR Code
                     </button>
                 </div>
                 <div>
-                    {qrCodeImage && (
+                    {url && (
                         <div className={`border border-${darkMode ? 'gray-700' : 'gray-300'} p-4 inline-block mb-4`}>
-                            <img 
-                                src={qrCodeImage} 
-                                alt="QR Code" 
-                                className="block mx-auto mb-2 h-72 w-72" />
-                            <button
-                                onClick={downloadQRCode}
-                                className={`bg-green-500 text-white px-4 py-2  rounded-md hover:bg-${darkMode ? 'blue-800' : 'blue-600'} focus:outline-none focus:ring-2 focus:ring-${darkMode ? 'blue-500' : 'blue-200'}`}
-                            >
-                                Download QR Code
-                            </button>
+                            <QRCode 
+                                value={url} 
+                                size={256} 
+                                bgColor={darkMode ? "#1F2937" : "#FFFFFF"} 
+                                fgColor={darkMode ? "#FFFFFF" : "#000000"} 
+                                includeMargin={true} 
+                            />
                         </div>
                     )}
-                    {!qrCodeImage && <p className={`${darkMode ? "text-white" : ""} font-semibold`}>Please input a URL above to generate the QR code.</p>}
+                    {!url && <p className={`${darkMode ? "text-white" : ""} font-semibold`}>Please input a URL above to generate the QR code.</p>}
                 </div>
             </div>
         </section>
