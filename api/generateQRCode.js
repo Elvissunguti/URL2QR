@@ -24,15 +24,13 @@ export default async function handler(req, res) {
         }
 
         // Convert blob to Base64 string
-        const blob = await response.blob();
-        const reader = new FileReader();
-        reader.readAsDataURL(blob);
-        reader.onloadend = () => {
-            const base64data = reader.result;
+        const buffer = await response.buffer();
 
-            // Send JSON response with Base64 image data
-            res.status(200).json({ image: base64data });
-        };
+        // Convert Buffer to Base64 string
+        const base64data = buffer.toString('base64');
+
+        // Send JSON response with Base64 image data
+        res.status(200).json({ image: base64data });
     } catch (error) {
         console.error('Error generating QR code:', error);
         res.status(500).json({ error: 'Internal Server Error' });
